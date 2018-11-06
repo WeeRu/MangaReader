@@ -3,6 +3,7 @@ package RDTO.Servelt;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.stream.Collectors;
 
@@ -19,7 +20,8 @@ import RDTO.Controles.*;
 public class Registro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private  static Propiedades prop= new Propiedades();
-    private  static BaseDatos BD= new BaseDatos();
+    private Ecriptar ecrip;
+    
 	 
     public Registro() {
         super();
@@ -69,15 +71,32 @@ public class Registro extends HttpServlet {
         
             PreparedStatement stat = null;
         	String signupQuery = prop.getValue("query_NuevoUsuario");
+        	//String veri = prop.getValue("query_chekNU");
         	stat = BaseDatos.getConnection().prepareStatement(signupQuery);
-        	stat.setString(1,clave);
-        	stat.setString(2, usuario);
-        	stat.setString(3, nombre);
-        	stat.setTimestamp(4, getTiempo() );
-        	stat.setString(5, email);
+        	PreparedStatement stats = BaseDatos.getConnection().prepareStatement(prop.getValue("query_chekNU"));
+        	ecrip = new Ecriptar(clave);
+        	ResultSet n = stats.executeQuery();
+        	int m = 0;
+        	for (; n.next();) {
+        		m =  ((Number) n.getObject(1)).intValue();
+        		m++;
+        		}
+        	stat.setInt(1, m);
+        	stat.setString(2,ecrip.returnEncrypt());
+        	stat.setString(3, usuario);
+        	stat.setString(4, nombre);
+        	stat.setTimestamp(5, getTiempo() );
+        	stat.setString(6, email);
         	stat.executeUpdate();
+        	
+        	//if(stat.) {
+        		//n++;
+        	//}
             resp.setMessage("Exito en en registro");
             System.out.print(resp);
+            
+            
+            
 	}catch(SQLException e){
 		System.out.print("ERROR EN DOPOST= "+e.getMessage());
 	}
