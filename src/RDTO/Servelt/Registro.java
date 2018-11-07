@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.stream.Collectors;
 
+import javax.net.ssl.SSLEngineResult.Status;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +22,7 @@ public class Registro extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private  static Propiedades prop= new Propiedades();
     private Ecriptar ecrip;
+    private BaseDatos bd = new BaseDatos();
     
 	 
     public Registro() {
@@ -29,8 +31,7 @@ public class Registro extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-
-		ObjectMapper objMapper = new ObjectMapper();
+		/*	ObjectMapper objMapper = new ObjectMapper();
     try {
     																																																																																																		Respuesta<ClaseJson> resp = new Respuesta<>();
     	ClaseJson ClaseJson = objMapper.readValue(request.getReader().lines().collect(Collectors.joining(System.lineSeparator())), ClaseJson.class);
@@ -43,12 +44,12 @@ public class Registro extends HttpServlet {
 		 System.out.print("ERROR EN DOGET"+e.getMessage());
 	     }
 		
-		
+		*/
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		int m = 0;
 		ObjectMapper objMapper = new ObjectMapper();
     try {
     	//variables
@@ -71,29 +72,39 @@ public class Registro extends HttpServlet {
         
             PreparedStatement stat = null;
         	String signupQuery = prop.getValue("query_NuevoUsuario");
-        	//String veri = prop.getValue("query_chekNU");
         	stat = BaseDatos.getConnection().prepareStatement(signupQuery);
         	PreparedStatement stats = BaseDatos.getConnection().prepareStatement(prop.getValue("query_chekNU"));
         	ecrip = new Ecriptar(clave);
         	ResultSet n = stats.executeQuery();
-        	int m = 0;
+        	
+        	
         	for (; n.next();) {
         		m =  ((Number) n.getObject(1)).intValue();
         		m++;
         		}
+        	
         	stat.setInt(1, m);
         	stat.setString(2,ecrip.returnEncrypt());
         	stat.setString(3, usuario);
         	stat.setString(4, nombre);
         	stat.setTimestamp(5, getTiempo() );
+        	bd.checkEmail(email);
+        	boolean status= bd.state;
+        	if(status==true) {
         	stat.setString(6, email);
         	stat.executeUpdate();
+        	}else {
+        		System.out.println("  el email yaa existe");
+                resp.setMessage("Error con Email");       	
+        	}
+        
         	
         	//if(stat.) {
         		//n++;
         	//}
-            resp.setMessage("Exito en en registro");
+           // resp.setMessage("Exito en en registro");
             System.out.print(resp);
+            response.getWriter().print(resp.getMessage());
             
             
             
