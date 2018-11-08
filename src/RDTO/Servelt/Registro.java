@@ -66,7 +66,7 @@ public class Registro extends HttpServlet {
         String res = objMapper.writeValueAsString(resp);
         
         System.out.println(objMapper.writerWithDefaultPrettyPrinter().writeValueAsString(resp));
-        response.getWriter().print(res);
+        //response.getWriter().print(res);
         System.out.print(ClaseJson.Clave+" "+ClaseJson.Nombre+" "+ClaseJson.Email+" "+ClaseJson.Usuario);
        
         
@@ -95,7 +95,8 @@ public class Registro extends HttpServlet {
         	stat.executeUpdate();
         	}else {
         		System.out.println("  el email yaa existe");
-                resp.setMessage("Error con Email");       	
+                resp.setMessage("Error con Email");
+                stat.close();
         	}
         
         	
