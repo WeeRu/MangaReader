@@ -1,0 +1,44 @@
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="img/doge.jpg">
+    <title>MangaReader</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+    <div class="contenedor-form"> 
+           
+        <div class="formulario" id="div1">
+            <h2>Iniciar Sesión</h2>
+            <form >
+             
+                <input onclick="on();" type="text" placeholder="Usuario" required >
+                <input type="password" placeholder="Contraseña" required>
+                <input type="submit" value="Iniciar Sesión">
+                <button type="button" id="button4" onclick="reg();">Crear Cuenta</button>
+            </form>
+        </div>
+        
+        <div class="formulario" id="div2">
+            <h2>Crea tu Cuenta</h2>
+            <form>
+                
+                <input type="password" placeholder="Contraseña" required id="Clave">
+                
+                <input type="text" placeholder="Usuario" required id="Usuario">
+                
+                <input type="text" placeholder="Nombre" required id="Nombre">
+                
+                <input type="email" placeholder="Correo Electronico" required id="Email">
+                
+                <input type="submit" value="Registrarse" id="button3">
+               
+                <button type="button" id="button5" onclick="log();">Ya tengo una Cuenta</button>           
+            </form>
+        </div>
+       
+    </div>    
+    <script src="Js\main.js" type="text/javascript"></script>
+</body>
+</html>

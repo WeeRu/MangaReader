@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
 import java.sql.ResultSet;
 
 
@@ -27,13 +27,19 @@ public class BaseDatos {
   }
   
   public boolean checkEmail(String email) {
-		
+	  int i;
+	  //String[] arreglo = new String[1];
+	 // ArrayList<String> arreglo = new ArrayList<String>();
 		try {
-			this.pstmt = conn.prepareStatement(prop.getValue("query_checkusersign"));
-			this.pstmt.setString(1, email);
-		    ResultSet rs = pstmt.executeQuery();
-			boolean state1 = rs.next();
-			if(state1) {
+			this.pstmt = conn.prepareStatement(prop.getValue("query_checkemail"));
+			this.pstmt.setString(1,email);
+		    
+			ResultSet rs = pstmt.executeQuery();
+			   
+		    
+			if(rs.next()) {
+				state = false;
+				
 				System.out.println("  Email existes");
 			} else{
 				state = true;
