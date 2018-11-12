@@ -33,6 +33,10 @@
     	let config = {
     		method: 'POST',
     		body: JSON.stringify(data),
+    		headers : { 
+    	        'Content-Type': 'application/json',
+    	        'Accept': 'application/json'
+    	       },
             };
     	fetch("./Registro", config)
     		.then(function(response){
@@ -43,12 +47,12 @@
     		});
     	}
 
-    function validateEmail(email) {
+    /*function validateEmail(email) {
     	var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     	return re.test(email);
-    }
+    }*/
 
-    function validate() {
+    /*function validate() {
     	var result = document.getElementById("result");
     	var email = document.getElementById("email").value;
     	if (validateEmail(email)) {
@@ -59,18 +63,19 @@
     	    document.getElementById("button3").disabled = true;
     	}
     	return false;
-    }
+    }*/
 
     document.getElementById("button3").addEventListener("click", createAccount);
 
-    function SwitchURL(){
+    /*function SwitchURL(){
     	history.replaceState({},"Register", "Re.k8j2vdk.g.jkzvz84kl1.is.af7223.t.kjkkabofajs.er.Reggakbster.html");
     	document.getElementById("button3").disabled = true;
     }
 
     function forceLower(strInput) {
     	strInput.value=strInput.value.toLowerCase();
-    }</script>
+    }*/
+     </script>
     </form>
 </body>
 </html>
